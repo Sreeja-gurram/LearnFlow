@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-image: url('weather.jpg');
+            background-size: cover;
+        }
+
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        input {
+            padding: 8px;
+        }
+
+        button {
+            padding: 8px;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <input type="text" id="locationInput" placeholder="Enter location">
+        <button onclick="getWeather()">Get Weather</button>
+        <div id="weatherInfo"></div>
+    </div>
+    <script>
+        function getWeather() {
+    const locationInput = document.getElementById("locationInput").value;
+
+    if (locationInput.trim() === "") {
+        alert("Please enter a location.");
+        return;
+    }
+
+    const apiKey = "6f072e16be50b5e6dab1e4a7423d5f2b"; // Replace with your actual API key
+    const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${locationInput}&appid=${apiKey}`;
+
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            displayWeather(data);
+        })
+        .catch(error => {
+            console.error("Error fetching weather data:", error);
+        });
+    }
+
+    function displayWeather(data) {
+    const weatherInfo = document.getElementById("weatherInfo");
+    const cityName = data.city.name;
+
+    let forecastHTML = `<h2>${cityName} - 5 Day Forecast</h2>`;
+
+    // Loop through the 10-day forecast data
+    for (let i = 0; i < data.list.length; i += 8) {
+        const forecast = data.list[i];
+        const date = new Date(forecast.dt_txt);
+        const temperature = Math.round(forecast.main.temp - 273.15); // Convert temperature from Kelvin to Celsius
+        const description = forecast.weather[0].description;
+
+        forecastHTML += `
+            <div class="forecast-item">
+                <h4>Date: ${date.toDateString()}</h4>
+                <p>Temperature: ${temperature}°C</p>
+                <p>Description: ${description}</p>
+            </div>
+        `;
+    }
+
+    weatherInfo.innerHTML = forecastHTML;
+}
+
+    </script>
+</body>
+</html>
