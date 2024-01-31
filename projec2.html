@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Learning Platform</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        #courses {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 20px;
+        }
+        .course {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 10px;
+            width: 300px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+        .course:hover {
+            transform: scale(1.05);
+        }
+        .course img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+        .course-info {
+            padding: 10px;
+        }
+        .course-title {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        .course-description {
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Online Learning Platform</h1>
+</header>
+
+<div id="courses">
+    <!-- Course cards will be dynamically added here -->
+</div>
+
+<script>
+    // Example data (you would typically fetch this from a server)
+    const coursesData = [
+        {
+            title: 'Web Development Basics',
+            description: 'Learn HTML, CSS, and JavaScript to build websites.',
+            image: 'web-development.jpg',
+        },
+        {
+            title: 'Introduction to Python',
+            description: 'Discover the basics of Python programming language.',
+            image: 'python-intro.jpg',
+        },
+        // Add more courses as needed
+    ];
+
+    // Function to dynamically create course cards
+    function renderCourses() {
+        const coursesContainer = document.getElementById('courses');
+        coursesContainer.innerHTML = '';
+
+        coursesData.forEach(course => {
+            const courseCard = document.createElement('div');
+            courseCard.classList.add('course');
+
+            const courseImage = document.createElement('img');
+            courseImage.src = course.image;
+            courseCard.appendChild(courseImage);
+
+            const courseInfo = document.createElement('div');
+            courseInfo.classList.add('course-info');
+
+            const courseTitle = document.createElement('div');
+            courseTitle.classList.add('course-title');
+            courseTitle.innerText = course.title;
+
+            const courseDescription = document.createElement('div');
+            courseDescription.classList.add('course-description');
+            courseDescription.innerText = course.description;
+
+            courseInfo.appendChild(courseTitle);
+            courseInfo.appendChild(courseDescription);
+
+            courseCard.appendChild(courseInfo);
+
+            coursesContainer.appendChild(courseCard);
+        });
+    }
+
+    // Initial rendering
+    renderCourses();
+</script>
+
+</body>
+</html>
